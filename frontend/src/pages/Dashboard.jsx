@@ -11,45 +11,25 @@ const [user,setUser]=useState({});
 
 
 
-useEffect(()=>{
+useEffect(() => {
 
+    const user_id = localStorage.getItem("user_id");
 
-const user_id = localStorage.getItem("user_id");
+    axios.get(
+        `${import.meta.env.VITE_API_URL}/history/${user_id}`
+    )
+    .then(response => {
+        setHistory(response.data);
+    });
 
+    axios.get(
+        `${import.meta.env.VITE_API_URL}/user/${user_id}`
+    )
+    .then(response => {
+        setUser(response.data);
+    });
 
-
-axios.get(
-
-`http://127.0.0.1:5000/history/${user_id}`
-
-)
-
-.then(response=>{
-
-setHistory(response.data);
-
-});
-
-
-
-
-axios.get(
-    `${import.meta.env.VITE_API_URL}/user/${user_id}`
-)
-
-.then(response=>{
-
-setUser(response.data);
-
-});
-
-
-
-},[]);
-
-
-
-
+}, []);
 
 return(
 
